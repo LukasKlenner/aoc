@@ -19,7 +19,12 @@ public class Day1 implements Day {
             "nine", "n9e"
     );
 
-    public Object run(Stream<String> lines) {
+    @Override
+    public Object part1(Stream<String> lines) {
+        return null;
+    }
+
+    public Object part2(Stream<String> lines) {
 
         return lines
                 .map(s -> {

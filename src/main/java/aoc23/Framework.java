@@ -18,9 +18,12 @@ public abstract class Framework {
         Day day = (Day) dayClass.getConstructors()[0].newInstance();
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(dayClass.getResourceAsStream("input.txt"))))) {
-            System.out.println(day.run(reader.lines()));
+            System.out.println("Part1: " + day.part1(reader.lines()));
         }
 
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(dayClass.getResourceAsStream("input.txt"))))) {
+            System.out.println("Part2: " + day.part2(reader.lines()));
+        }
     }
 
     private static int getCurrentDay() {
