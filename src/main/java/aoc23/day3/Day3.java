@@ -8,43 +8,41 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import static java.lang.Character.isDigit;
+
 public class Day3 implements Day {
 
 
     @Override
     public Object part1(Stream<String> lines) {
 
-        Character[][] arr = lines.map(s -> s.chars().mapToObj(c -> (char) c).toArray(Character[]::new)).toArray(Character[][]::new);
+        char[][] arr = lines.map(String::toCharArray).toArray(char[][]::new);
         int sum = 0;
 
         for (int i = 0; i < arr.length; i++) {
-            int currentLength = arr[i].length;
             StringBuilder sb = new StringBuilder();
-            boolean building = false;
             boolean adjacentToSymbol = false;
 
-            for (int j = 0; j < currentLength; j++) {
+            for (int j = 0; j < arr[i].length; j++) {
 
-                Character c = arr[i][j];
+                char c = arr[i][j];
 
                 if (isDigit(c)) {
                     sb.append(c);
-                    building = true;
                     if (!adjacentToSymbol && isAdjacentToSymbol(arr, i, j)) {
                         adjacentToSymbol = true;
                     }
-                } else if (!isDigit(c) && building) {
+                } else if (!isDigit(c) && !sb.isEmpty()) {
                     if (adjacentToSymbol) {
                         sum += Integer.parseInt(sb.toString());
                     }
                     sb = new StringBuilder();
-                    building = false;
                     adjacentToSymbol = false;
                 }
 
             }
 
-            if (building && adjacentToSymbol) {
+            if (!sb.isEmpty() && adjacentToSymbol) {
                 sum += Integer.parseInt(sb.toString());
             }
         }
@@ -55,7 +53,7 @@ public class Day3 implements Day {
     @Override
     public Object part2(Stream<String> lines) {
 
-        Character[][] arr = lines.map(s -> s.chars().mapToObj(c -> (char) c).toArray(Character[]::new)).toArray(Character[][]::new);
+        char[][] arr = lines.map(String::toCharArray).toArray(char[][]::new);
         int[][] adjacentNumbers = new int[arr.length][arr[0].length];
         int[][] product = new int[arr.length][arr[0].length];
 
@@ -66,24 +64,21 @@ public class Day3 implements Day {
         }
 
         for (int i = 0; i < arr.length; i++) {
-            int currentLength = arr[i].length;
             StringBuilder sb = new StringBuilder();
-            boolean building = false;
             boolean adjacentToSymbol = false;
             Set<Point> dependents = new HashSet<>();
 
-            for (int j = 0; j < currentLength; j++) {
+            for (int j = 0; j < arr[i].length; j++) {
 
-                Character c = arr[i][j];
+                char c = arr[i][j];
 
                 if (isDigit(c)) {
                     sb.append(c);
-                    building = true;
-                    dependents.addAll(getAdjacentPoints(i, j, arr.length, arr[0].length).stream().filter(p -> arr[p.x()][p.y()].equals('*')).toList());
+                    dependents.addAll(getAdjacentPoints(i, j, arr.length, arr[0].length).stream().filter(p -> arr[p.x()][p.y()] == '*').toList());
                     if (!adjacentToSymbol && isAdjacentToSymbol(arr, i, j)) {
                         adjacentToSymbol = true;
                     }
-                } else if (!isDigit(c) && building) {
+                } else if (!isDigit(c) && !sb.isEmpty()) {
                     if (adjacentToSymbol) {
 
                         for (Point p : dependents) {
@@ -95,13 +90,12 @@ public class Day3 implements Day {
 
                     dependents.clear();
                     sb = new StringBuilder();
-                    building = false;
                     adjacentToSymbol = false;
                 }
 
             }
 
-            if (building && adjacentToSymbol) {
+            if (!sb.isEmpty() && adjacentToSymbol) {
                 for (Point p : dependents) {
                     product[p.x()][p.y()] *= Integer.parseInt(sb.toString());
                     adjacentNumbers[p.x()][p.y()]++;
@@ -124,7 +118,7 @@ public class Day3 implements Day {
 
 
 
-    private boolean isAdjacentToSymbol(Character[][] list, int i, int j) {
+    private boolean isAdjacentToSymbol(char[][] list, int i, int j) {
 
         return getAdjacentPoints(i, j, list.length, list[0].length).stream().anyMatch(p -> isSymbol(list[p.x()][p.y()]));
     }
@@ -147,12 +141,8 @@ public class Day3 implements Day {
         return points;
     }
 
-    private boolean isSymbol(Character c) {
+    private boolean isSymbol(char c) {
         return !Character.isDigit(c) && c != '.';
-    }
-
-    private boolean isDigit(Character c) {
-        return Character.isDigit(c);
     }
 
     record Point(int x, int y) {
