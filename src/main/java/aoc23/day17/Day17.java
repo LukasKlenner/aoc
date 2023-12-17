@@ -28,7 +28,7 @@ public class Day17 implements Day {
 
         Dijkstra dijkstra = new Dijkstra();
 
-        return dijkstra.getPath(new Pos(0, 0), new Pos(input[0].length - 1, input.length - 1), new Pos(input[0].length, input.length), weights, part1);
+        return dijkstra.getPath(new Pos(0, 0), new Pos(input[0].length - 1, input.length - 1), new Pos(input[0].length, input.length), weights, part1 ? 0 : 4, part1 ? 3 : 10);
     }
 
     private static class Dijkstra {
@@ -39,18 +39,29 @@ public class Day17 implements Day {
 
         private Pos bounds;
 
+        private int minSteps;
+
+        private int maxSteps;
+
+
         private final PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparing(distances::get));
 
-        public int getPath(Pos start, Pos end, Pos bounds, int[][] weights, boolean part1) {
+        public int getPath(Pos start, Pos end, Pos bounds, int[][] weights, int minSteps, int maxSteps) {
             this.bounds = bounds;
+            this.minSteps = minSteps;
+            this.maxSteps = maxSteps;
 
-            init(start);
+            for (Direction dir : Direction.values()) {
+                Node startNode = new Node(start, dir, 0);
+                distances.put(startNode, 0);
+                queue.add(startNode);
+            }
 
             while (!queue.isEmpty()) {
 
                 Node node = queue.poll();
 
-                Set<Node> neighbors = part1 ? getNeighborsPart1(node) : getNeighborsPart2(node);
+                Set<Node> neighbors = getNeighbors(node);
 
                 for (Node neighbor : neighbors) {
 
@@ -84,45 +95,11 @@ public class Day17 implements Day {
             throw new IllegalStateException();
         }
 
-        private void init(Pos start) {
-            distances.clear();
-            queue.clear();
-
-            for (Direction dir : Direction.values()) {
-                Node startNode = new Node(start, dir, 0);
-                distances.put(startNode, 0);
-                queue.add(startNode);
-            }
-        }
-
-        private Set<Node> getNeighborsPart1(Node node) {
+        private Set<Node> getNeighbors(Node node) {
 
             Set<Node> neighbors = new HashSet<>(3);
 
-            for (Direction dir : Direction.values()) {
-
-                if (dir == node.dir.opposite()) continue;
-
-                Pos target = node.pos.add(dir);
-                if (target.isOutside(bounds)) continue;
-
-                if (dir == node.dir) {
-                    if (node.count < 3) {
-                        neighbors.add(new Node(target, dir, node.count + 1));
-                    }
-                } else {
-                    neighbors.add(new Node(target, dir, 1));
-                }
-            }
-
-            return neighbors;
-        }
-
-        private Set<Node> getNeighborsPart2(Node node) {
-
-            Set<Node> neighbors = new HashSet<>(3);
-
-            if (node.count < 4) {
+            if (node.count < minSteps) {
                 Pos target = node.pos.add(node.dir);
                 if (target.isOutside(bounds)) return Set.of();
                 return Set.of(new Node(target, node.dir, node.count + 1));
@@ -136,7 +113,7 @@ public class Day17 implements Day {
                 if (target.isOutside(bounds)) continue;
 
                 if (dir == node.dir) {
-                    if (node.count < 10) {
+                    if (node.count < maxSteps) {
                         neighbors.add(new Node(target, dir, node.count + 1));
                     }
                 } else {
