@@ -51,7 +51,8 @@ public class Day13 implements Day {
         columns: for (int i = 1; i < input.get(0).size(); i++) {
 
             int smudgeCount = 0;
-
+            int lastRow = -1;
+            int lastColumn = -1;
             int iteration = Math.min(i, input.get(0).size() - i);
 
             for (int j = 0; j < iteration; j++) {
@@ -67,7 +68,8 @@ public class Day13 implements Day {
 
                         if (smudgeCount == 1) continue columns;
                         smudgeCount++;
-
+                        lastRow = k;
+                        lastColumn = leftColumn;
                     }
 
                 }
@@ -75,7 +77,10 @@ public class Day13 implements Day {
             }
 
             if (part1) return i;
-            if (smudgeCount == 1) return i;
+            if (smudgeCount == 1) {
+                System.out.printf("ColumnMirror: row: %d, column: %d, mirror: %d\n", lastRow, lastColumn, i);
+                return i;
+            }
 
 
         }
@@ -84,6 +89,8 @@ public class Day13 implements Day {
 
             int smudgeCount = 0;
             int iteration = Math.min(i, input.size() - i);
+            int lastRow = -1;
+            int lastColumn = -1;
 
             for (int j = 0; j < iteration; j++) {
 
@@ -98,6 +105,8 @@ public class Day13 implements Day {
 
                         if (smudgeCount == 1) continue rows;
                         smudgeCount++;
+                        lastRow = leftRow;
+                        lastColumn = k;
                     }
 
                 }
@@ -105,7 +114,10 @@ public class Day13 implements Day {
             }
 
             if (part1) return 100 * i;
-            if (smudgeCount == 1) return 100 * i;
+            if (smudgeCount == 1) {
+                System.out.printf("RowMirror: row: %d, column: %d, mirror: %d\n", lastRow, lastColumn, i);
+                return 100 * i;
+            }
 
         }
 
