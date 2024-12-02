@@ -1,2 +1,2 @@
-rootProject.name = "aoc23"
+rootProject.name = "aoc"
 
