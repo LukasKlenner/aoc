@@ -1,6 +1,6 @@
-package aoc23.day24;
+package aoc.year23.day24;
 
-import aoc23.Day;
+import aoc.Day;
 
 import java.util.ArrayList;
 import java.util.List;

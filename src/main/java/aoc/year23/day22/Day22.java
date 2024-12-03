@@ -1,6 +1,6 @@
-package aoc23.day22;
+package aoc.year23.day22;
 
-import aoc23.Day;
+import aoc.Day;
 
 import java.util.*;
 import java.util.stream.Stream;
