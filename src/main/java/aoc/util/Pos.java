@@ -1,5 +1,7 @@
 package aoc.util;
 
+import java.util.Objects;
+
 public class Pos {
 
     public int x;
@@ -10,18 +12,31 @@ public class Pos {
         this.y = y;
     }
 
-    public void add(Direction direction, int value) {
+    public Pos(Pos pos) {
+        this.x = pos.x;
+        this.y = pos.y;
+    }
+
+    public Pos add(Direction direction, int value) {
         switch (direction) {
             case UP: y -= value; break;
             case DOWN: y += value; break;
             case LEFT: x -= value; break;
             case RIGHT: x += value; break;
         }
+
+        return this;
     }
 
-    public void add(int dx, int dy) {
+    public Pos add(Direction direction) {
+        add(direction, 1);
+        return this;
+    }
+
+    public Pos add(int dx, int dy) {
         x += dx;
         y += dy;
+        return this;
     }
 
     public <T> boolean isInbounds(T[][] arr) {
@@ -43,5 +58,18 @@ public class Pos {
     @Override
     public String toString() {
         return "(%d, %d)".formatted(x, y);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pos pos = (Pos) o;
+        return x == pos.x && y == pos.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }

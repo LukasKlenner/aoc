@@ -12,4 +12,13 @@ public enum Direction {
             default -> throw new IllegalStateException("Unexpected value: " + str);
         };
     }
+
+    public Direction rotate90() {
+        return switch (this) {
+            case UP -> RIGHT;
+            case RIGHT -> DOWN;
+            case DOWN -> LEFT;
+            case LEFT -> UP;
+        };
+    }
 }
