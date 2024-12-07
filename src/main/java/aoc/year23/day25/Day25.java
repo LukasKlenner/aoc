@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 public class Day25 implements Day {
 
     @Override
-    public Object part1(Stream<String> lines) {
+    public long part1(Stream<String> lines) {
 
         HashMap<String, Node> nodes = new HashMap<>();
 
@@ -58,7 +58,7 @@ public class Day25 implements Day {
             }
         }
 
-         return null;
+         return 0;
     }
 
     private int dfs(Node node) {
@@ -79,8 +79,8 @@ public class Day25 implements Day {
     }
 
     @Override
-    public Object part2(Stream<String> lines) {
-        return null;
+    public long part2(Stream<String> lines) {
+        return 0;
     }
 
     private static class Node {

@@ -9,16 +9,16 @@ import java.util.stream.Stream;
 
 public class Day9 implements Day {
     @Override
-    public Object part1(Stream<String> lines) {
+    public long part1(Stream<String> lines) {
         return run(lines, true);
     }
 
     @Override
-    public Object part2(Stream<String> lines) {
+    public long part2(Stream<String> lines) {
         return run(lines, false);
     }
 
-    private Object run(Stream<String> lines, boolean part1) {
+    private long run(Stream<String> lines, boolean part1) {
         return lines.map(s -> Arrays.stream(s.split(" ")).map(Integer::parseInt).toList()).mapToInt(l -> extrapolate(l, part1)).sum();
     }
 

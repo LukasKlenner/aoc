@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 public class Day4 implements JoinedDay {
 
     @Override
-    public Object run(Stream<String> stream, boolean part1) {
+    public long run(Stream<String> stream, boolean part1) {
 
         int[][] arr = stream.map(s -> s.chars().map(c -> switch (c) {
             case 'X' -> 0;
@@ -43,12 +43,12 @@ public class Day4 implements JoinedDay {
     }
 
     private boolean checkForStreak(Pos pos, int dx, int dy, int length, int[][] arr) {
-        if (!pos.isInbounds(arr)) return false;
+        if (!pos.isInBounds(arr)) return false;
 
         int startValue = pos.getValue(arr);
 
-        pos.add(dx, dy);
-        if (!pos.isInbounds(arr)) return false;
+        pos = pos.add(dx, dy);
+        if (!pos.isInBounds(arr)) return false;
 
         int currentValue = pos.getValue(arr);
         int diff = currentValue - startValue;
@@ -56,8 +56,8 @@ public class Day4 implements JoinedDay {
         if (Math.abs(diff) != 1) return false;
 
         for (int i = 0; i < length - 2; i++) {
-            pos.add(dx, dy);
-            if (!pos.isInbounds(arr)) return false;
+            pos = pos.add(dx, dy);
+            if (!pos.isInBounds(arr)) return false;
 
             if (pos.getValue(arr) - currentValue != diff) return false;
             currentValue = pos.getValue(arr);

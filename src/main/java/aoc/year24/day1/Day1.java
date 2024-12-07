@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 public class Day1 implements JoinedDay {
 
     @Override
-    public Object run(Stream<String> stream, boolean part1) {
+    public long run(Stream<String> stream, boolean part1) {
 
         List<Integer> list1 = new ArrayList<>();
         List<Integer> list2 = new ArrayList<>();

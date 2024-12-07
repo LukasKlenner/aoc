@@ -12,7 +12,7 @@ public class Day3 implements aoc.Day {
 
 
     @Override
-    public Object part1(Stream<String> lines) {
+    public long part1(Stream<String> lines) {
 
         char[][] arr = lines.map(String::toCharArray).toArray(char[][]::new);
         int sum = 0;
@@ -49,7 +49,7 @@ public class Day3 implements aoc.Day {
     }
 
     @Override
-    public Object part2(Stream<String> lines) {
+    public long part2(Stream<String> lines) {
 
         char[][] arr = lines.map(String::toCharArray).toArray(char[][]::new);
         int[][] adjacentNumbers = new int[arr.length][arr[0].length];

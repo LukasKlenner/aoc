@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 
 public class Day14 implements aoc.Day {
     @Override
-    public Object part1(Stream<String> lines) {
+    public long part1(Stream<String> lines) {
 
         Character[][] input = lines.map(str -> str.chars().mapToObj(i -> (char) i).toArray(Character[]::new)).toArray(Character[][]::new);
         boolean[][] blocked = new boolean[input.length][input[0].length];
@@ -27,7 +27,7 @@ public class Day14 implements aoc.Day {
     }
 
     @Override
-    public Object part2(Stream<String> lines) {
+    public long part2(Stream<String> lines) {
 
         Character[][] input = lines.map(str -> str.chars().mapToObj(i -> (char) i).toArray(Character[]::new)).toArray(Character[][]::new);
         boolean[][] blocked = new boolean[input.length][input[0].length];

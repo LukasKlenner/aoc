@@ -7,8 +7,8 @@ import java.util.stream.Stream;
 public class Day9 implements JoinedDay {
 
     @Override
-    public Object run(Stream<String> stream, boolean part1) {
-        return null;
+    public long run(Stream<String> stream, boolean part1) {
+        return 0;
     }
 
 }

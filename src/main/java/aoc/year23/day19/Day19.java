@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 public class Day19 implements aoc.Day {
     @Override
-    public Object part1(Stream<String> linesStream) {
+    public long part1(Stream<String> linesStream) {
         List<String> input = linesStream.toList();
 
         int workFlowCount = readWorkFlows(input);
@@ -29,7 +29,7 @@ public class Day19 implements aoc.Day {
     }
 
     @Override
-    public Object part2(Stream<String> linesStream) {
+    public long part2(Stream<String> linesStream) {
 
         List<String> input = linesStream.toList();
 

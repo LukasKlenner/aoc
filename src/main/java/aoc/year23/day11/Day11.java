@@ -8,16 +8,16 @@ import java.util.stream.Stream;
 
 public class Day11 implements Day {
     @Override
-    public Object part1(Stream<String> linesStream) {
+    public long part1(Stream<String> linesStream) {
         return run(linesStream, true);
     }
 
     @Override
-    public Object part2(Stream<String> linesStream) {
+    public long part2(Stream<String> linesStream) {
         return run(linesStream, false);
     }
 
-    private Object run(Stream<String> linesStream, boolean part1) {
+    private long run(Stream<String> linesStream, boolean part1) {
         List<String> lines = linesStream.toList();
 
         boolean[] emptyRows = getEmptyRows(lines);

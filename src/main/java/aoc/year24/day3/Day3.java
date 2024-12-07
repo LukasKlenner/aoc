@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 public class Day3 implements JoinedDay {
 
     @Override
-    public Object run(Stream<String> stream, boolean part1) {
+    public long run(Stream<String> stream, boolean part1) {
 
         Pattern pattern = Pattern.compile("mul\\(\\d{1,3},\\d{1,3}\\)|do\\(\\)|don't\\(\\)");
         Matcher matcher = pattern.matcher(stream.collect(Collectors.joining("")));

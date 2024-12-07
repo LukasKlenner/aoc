@@ -1,121 +1,84 @@
 package aoc.year24.day6;
 
-import aoc.JoinedDay;
 import aoc.util.Direction;
+import aoc.util.MovementBasedGridTask;
 import aoc.util.Pos;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
-import java.util.function.Consumer;
-import java.util.stream.Stream;
 
-public class Day6 implements JoinedDay {
+public class Day6 extends MovementBasedGridTask<Boolean> {
+
+    public Day6() {
+        super(c -> c == '#', Boolean[]::new, Boolean[][]::new);
+    }
 
     @Override
-    public Object run(Stream<String> stream, boolean part1) {
-
-        List<String> list = stream.toList();
-
-        AtomicReference<Pos> start = new AtomicReference<>();
-
-        Boolean[][] grid = list.stream().map(s ->
-                s.chars().mapToObj(c -> {
-                    if (c == '^') start.set(new Pos(s.indexOf(c), list.indexOf(s)));
-                    return c == '#';
-                }).toArray(Boolean[]::new)
-                ).toArray(Boolean[][]::new);
-
-        Pos startPos = start.get();
-        Direction startDir = Direction.UP;
+    public long run(boolean part1) {
+        Map<Pos, Set<Direction>> visited = new HashMap<>();
 
         if (part1) {
-            Map<Pos, Set<Direction>> visited = new HashMap<>();
-            tracePath(startPos, startDir, grid, visited, (p, d) -> {});
+            tracePath(visited, () -> {});
             return visited.size();
         } else {
-            Map<Pos, Set<Direction>> visited = new HashMap<>();
-
             Set<Pos> loopPositions = new HashSet<>();
 
-            tracePath(startPos, startDir, grid, visited, (p, d) -> {
-                Map<Pos, Set<Direction>> visitedCopy = copyVisited(visited);
+            tracePath(visited, () -> {
 
-                Pos obstaclePos = new Pos(p).add(d);
+                Pos obstaclePos = currentPos.add(currentDir);
 
-                if (loopPositions.contains(obstaclePos) || !obstaclePos.isInbounds(grid)) {
+                if (loopPositions.contains(obstaclePos) || !isInBounds(obstaclePos) || getValue(obstaclePos) || visited.containsKey(obstaclePos)) {
                     return;
                 }
 
-                Direction newDir = d.rotate90();
-                if (tracePath(p, newDir, grid, visitedCopy, (p2, d2) -> {})) {
+                Map<Pos, Set<Direction>> visitedCopy = copyVisited(visited);
+
+                storeCurrentLocation();
+                Boolean old = putValue(obstaclePos, true);
+
+                if (tracePath(visitedCopy, () -> {})) {
                     loopPositions.add(obstaclePos);
                 }
 
+                loadLastLocation();
+                putValue(obstaclePos, old);
             });
+
             return loopPositions.size();
         }
-
     }
 
-    private boolean tracePath(Pos pos, Direction dir, Boolean[][] grid, Map<Pos, Set<Direction>> visited,
-                              BiConsumer<Pos, Direction> onDiscover) {
-        while (pos.isInbounds(grid)) {
-            if (!visited.containsKey(pos)) {
-                visited.put(new Pos(pos), new HashSet<>());
-            }
+    private boolean tracePath(Map<Pos, Set<Direction>> visited, Runnable onDiscover) {
+        while (isInBounds()) {
 
-            Set<Direction> dirs = visited.get(pos);
+            visited.putIfAbsent(currentPos, new HashSet<>());
+            Set<Direction> dirs = visited.get(currentPos);
 
-            if (dirs.contains(dir)) {
+            if (dirs.contains(currentDir)) {
                 return true;
-            } else {
-                onDiscover.accept(new Pos(pos), dir);
             }
-            dirs.add(dir);
 
-            while (!canMove(pos, dir, grid)) {
-                dir = dir.rotate90();
+            onDiscover.run();
+            dirs.add(currentDir);
 
-                if (dirs.contains(dir)) {
+            while (!canMove()) {
+                rotate90();
+
+                if (dirs.contains(currentDir)) {
                     return true;
-                } else {
-                    onDiscover.accept(new Pos(pos), dir);
                 }
-                dirs.add(dir);
 
+                onDiscover.run();
+                dirs.add(currentDir);
             }
 
-            pos.add(dir);
+            move();
         }
 
         return false;
-    }
-
-    private boolean canMove(Pos pos, Direction dir, Boolean[][] grid) {
-        Pos nextPos = new Pos(pos).add(dir);
-        return !nextPos.isInbounds(grid) || !grid[nextPos.y][nextPos.x];
-    }
-
-    private Direction getNextDirection(Pos pos, Direction dir, Boolean[][] grid) {
-        Direction nextDir = dir;
-
-        while (true) {
-            Pos nextPos = new Pos(pos).add(nextDir);
-            if (!nextPos.isInbounds(grid) || !grid[nextPos.y][nextPos.x]) {
-                return nextDir;
-            }
-
-            nextDir = nextDir.rotate90();
-        }
     }
 
     private Map<Pos, Set<Direction>> copyVisited(Map<Pos, Set<Direction>> visited) {
@@ -124,4 +87,29 @@ public class Day6 implements JoinedDay {
         return copy;
     }
 
+    @Override
+    protected Pos getStartPos() {
+        for (int y = 0; y < input.size(); y++) {
+            String line = input.get(y);
+
+            for (int x = 0; x < line.length(); x++) {
+                if (line.charAt(x) == '^') {
+                    return new Pos(x, y);
+                }
+            }
+        }
+
+        throw new IllegalArgumentException();
+    }
+
+    @Override
+    protected Direction getStartDir() {
+        return Direction.UP;
+    }
+
+    @Override
+    protected boolean canMove() {
+        Pos nextPos = currentPos.add(currentDir);
+        return !isInBounds(nextPos) || !grid[nextPos.y()][nextPos.x()];
+    }
 }

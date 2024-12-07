@@ -9,12 +9,12 @@ import java.util.stream.Stream;
 public class Day13 implements Day {
 
     @Override
-    public Object part1(Stream<String> lines) {
+    public long part1(Stream<String> lines) {
         return run(lines, true);
     }
 
     @Override
-    public Object part2(Stream<String> lines) {
+    public long part2(Stream<String> lines) {
         return run(lines, false);
     }
 

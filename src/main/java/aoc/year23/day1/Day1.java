@@ -20,11 +20,11 @@ public class Day1 implements Day {
     );
 
     @Override
-    public Object part1(Stream<String> lines) {
-        return null;
+    public long part1(Stream<String> lines) {
+        return 0;
     }
 
-    public Object part2(Stream<String> lines) {
+    public long part2(Stream<String> lines) {
 
         return lines
                 .map(s -> {

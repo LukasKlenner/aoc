@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 public class Day8 implements aoc.Day {
     @Override
-    public Object part1(Stream<String> linesStream) {
+    public long part1(Stream<String> linesStream) {
         List<String> lines = linesStream.toList();
 
         char[] next = lines.get(0).toCharArray();
@@ -43,7 +43,7 @@ public class Day8 implements aoc.Day {
     }
 
     @Override
-    public Object part2(Stream<String> linesStream) {
+    public long part2(Stream<String> linesStream) {
         List<String> lines = linesStream.toList();
 
         char[] next = lines.get(0).toCharArray();
@@ -91,7 +91,7 @@ public class Day8 implements aoc.Day {
             }
         }
 
-        return iterations.stream().reduce(BigInteger.ONE, (x, y) -> x.multiply(y.divide(x.gcd(y))));
+        return iterations.stream().reduce(BigInteger.ONE, (x, y) -> x.multiply(y.divide(x.gcd(y)))).longValue();
     }
 
     private static class Node {

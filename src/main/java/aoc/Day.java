@@ -4,7 +4,7 @@ import java.util.stream.Stream;
 
 public interface Day {
 
-    Object part1(Stream<String> lines);
+    long part1(Stream<String> lines);
 
-    Object part2(Stream<String> lines);
+    long part2(Stream<String> lines);
 }

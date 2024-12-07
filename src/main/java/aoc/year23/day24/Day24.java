@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 
 public class Day24 implements Day {
     @Override
-    public Object part1(Stream<String> linesStream) {
+    public long part1(Stream<String> linesStream) {
 
         List<Line> lines = new ArrayList<>();
 
@@ -28,8 +28,8 @@ public class Day24 implements Day {
     }
 
     @Override
-    public Object part2(Stream<String> lines) {
-        return null;
+    public long part2(Stream<String> lines) {
+        return 0;
     }
 
     private record Line(Vec pos, Vec dir) {

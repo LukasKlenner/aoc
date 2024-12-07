@@ -5,16 +5,16 @@ import java.util.stream.Stream;
 
 public class Day17 implements aoc.Day {
     @Override
-    public Object part1(Stream<String> lines) {
+    public long part1(Stream<String> lines) {
         return run(lines, true);
     }
 
     @Override
-    public Object part2(Stream<String> lines) {
+    public long part2(Stream<String> lines) {
         return run(lines, false);
     }
 
-    private Object run(Stream<String> lines, boolean part1) {
+    private long run(Stream<String> lines, boolean part1) {
         char[][] input = lines.map(String::toCharArray).toArray(char[][]::new);
         int[][] weights = new int[input.length][input[0].length];
 

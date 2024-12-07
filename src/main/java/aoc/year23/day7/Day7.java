@@ -9,16 +9,16 @@ public class Day7 implements aoc.Day {
 
 
     @Override
-    public Object part1(Stream<String> lines) {
+    public long part1(Stream<String> lines) {
         return day7(lines, true);
     }
 
     @Override
-    public Object part2(Stream<String> lines) {
+    public long part2(Stream<String> lines) {
         return day7(lines, false);
     }
 
-    private Object day7(Stream<String> lines, boolean part1) {
+    private long day7(Stream<String> lines, boolean part1) {
         HashMap<Type, List<Long>>  typeToCards = new HashMap<>();
         HashMap<Long, Integer> cardToBid = new HashMap<>();
 

@@ -5,14 +5,14 @@ import java.util.stream.Stream;
 
 public class Day15 implements aoc.Day {
     @Override
-    public Object part1(Stream<String> lines) {
+    public long part1(Stream<String> lines) {
         return lines.flatMap(l -> Arrays.stream(l.split(",")))
                 .mapToInt(str -> str.chars().reduce(0, (i, j) -> ((i + j) * 17) % 256))
                 .sum();
     }
 
     @Override
-    public Object part2(Stream<String> lines) {
+    public long part2(Stream<String> lines) {
 
         Map<String, Integer> map = new LinkedHashMap<>();
 

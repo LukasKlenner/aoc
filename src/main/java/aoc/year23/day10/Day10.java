@@ -11,7 +11,7 @@ public class Day10 implements aoc.Day {
 
 
     @Override
-    public Object part1(Stream<String> linesStream) {
+    public long part1(Stream<String> linesStream) {
 
         Character[][] arr = linesStream.map(line -> line.chars().mapToObj(i -> (char) i).toArray(Character[]::new)).toArray(Character[][]::new);
         PipeType[][] pipes = Arrays.stream(arr).map(a -> Arrays.stream(a).map(PipeType::of).toArray(PipeType[]::new)).toArray(PipeType[][]::new);
@@ -34,11 +34,11 @@ public class Day10 implements aoc.Day {
             }
         }
 
-        return null;
+        return 0;
     }
 
     @Override
-    public Object part2(Stream<String> linesStream) {
+    public long part2(Stream<String> linesStream) {
 
         Character[][] arr = linesStream.map(line -> line.chars().mapToObj(i -> (char) i).toArray(Character[]::new)).toArray(Character[][]::new);
         PipeType[][] pipes = Arrays.stream(arr).map(a -> Arrays.stream(a).map(PipeType::of).toArray(PipeType[]::new)).toArray(PipeType[][]::new);
@@ -100,7 +100,7 @@ public class Day10 implements aoc.Day {
                 .sum();
     }
 
-    private double findPath(PipeType[][] pipes, Pos pos, Direction direction) {
+    private long findPath(PipeType[][] pipes, Pos pos, Direction direction) {
         PipeType pipeType = pipes[pos.y()][pos.x()];
         int count = 1;
 
@@ -113,7 +113,7 @@ public class Day10 implements aoc.Day {
             direction = nextDirection.opposite();
         }
 
-        return count / 2.0;
+        return (long) (count / 2.0);
     }
 
     private boolean[][] markPath(PipeType[][] pipes, Pos pos, Direction direction) {

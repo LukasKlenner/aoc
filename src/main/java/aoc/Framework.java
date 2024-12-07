@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
-public abstract class Framework {
+public class Framework {
 
     public static final int DAY = 6;
     public static final int YEAR = 2024;

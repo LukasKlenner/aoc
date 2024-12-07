@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 public class Day5 implements JoinedDay {
 
     @Override
-    public Object run(Stream<String> stream, boolean part1) {
+    public long run(Stream<String> stream, boolean part1) {
 
         Iterator<String> input = stream.iterator();
 

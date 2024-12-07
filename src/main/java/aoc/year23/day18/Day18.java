@@ -5,16 +5,16 @@ import java.util.stream.Stream;
 
 public class Day18 implements aoc.Day {
     @Override
-    public Object part1(Stream<String> linesStream) {
+    public long part1(Stream<String> linesStream) {
         return run(linesStream.toList(), true);
     }
 
     @Override
-    public Object part2(Stream<String> linesStream) {
+    public long part2(Stream<String> linesStream) {
         return run(linesStream.toList(), false);
     }
 
-    private Object run(List<String> lines, boolean part1) {
+    private long run(List<String> lines, boolean part1) {
 
         Pos[] positions = new Pos[lines.size() + 1];
         long count = 0;
@@ -83,7 +83,7 @@ public class Day18 implements aoc.Day {
 
         area /= 2;
 
-        return (area + 1) - (count / 2.0) + count;
+        return (long) ((area + 1) - (count / 2.0) + count);
     }
 
     private enum Direction {

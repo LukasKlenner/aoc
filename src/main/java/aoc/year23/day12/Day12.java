@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 
 public class Day12 implements aoc.Day {
     @Override
-    public Object part1(Stream<String> lines) {
+    public long part1(Stream<String> lines) {
 
         return lines.mapToLong(line -> {
 
@@ -23,7 +23,7 @@ public class Day12 implements aoc.Day {
     }
 
     @Override
-    public Object part2(Stream<String> lines) {
+    public long part2(Stream<String> lines) {
         return lines.mapToLong(line -> {
 
             char[] input = Stream.generate(() -> line.split(" ")[0]).limit(5).collect(Collectors.joining("?")).toCharArray();

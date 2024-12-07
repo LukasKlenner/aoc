@@ -5,19 +5,19 @@ import java.util.stream.Stream;
 
 public class Day16 implements aoc.Day {
     @Override
-    public Object part1(Stream<String> linesStream) {
+    public long part1(Stream<String> linesStream) {
         return run(linesStream, true);
     }
 
     @Override
-    public Object part2(Stream<String> linesStream) {
+    public long part2(Stream<String> linesStream) {
         long start = System.currentTimeMillis();
-        Object run = run(linesStream, false);
+        long run = run(linesStream, false);
         System.out.println(System.currentTimeMillis() - start);
         return run;
     }
 
-    private Object run(Stream<String> linesStream, boolean part1) {
+    private long run(Stream<String> linesStream, boolean part1) {
         char[][] input = linesStream.map(String::toCharArray).toArray(char[][]::new);
         Mirror[][] mirrors = new Mirror[input.length][input[0].length];
 

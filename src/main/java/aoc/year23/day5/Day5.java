@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 public class Day5 implements aoc.Day {
 
     @Override
-    public Object part1(Stream<String> linesStream) {
+    public long part1(Stream<String> linesStream) {
 
         List<String> lines = linesStream.collect(Collectors.toList());
         lines.add("");
@@ -39,7 +39,7 @@ public class Day5 implements aoc.Day {
     }
 
     @Override
-    public Object part2(Stream<String> linesStream) {
+    public long part2(Stream<String> linesStream) {
         List<String> lines = linesStream.collect(Collectors.toList());
         lines.add("");
         List<Long> seeds = Arrays.stream(lines.get(0).substring(7).split(" ")).map(Long::parseLong).toList();

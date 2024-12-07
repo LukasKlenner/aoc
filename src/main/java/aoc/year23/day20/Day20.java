@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 
 public class Day20 implements Day {
     @Override
-    public Object part1(Stream<String> lines) {
+    public long part1(Stream<String> lines) {
 
         Simulation simulation = createSimulation(lines.toList());
 
@@ -20,7 +20,7 @@ public class Day20 implements Day {
     }
 
     @Override
-    public Object part2(Stream<String> lines) {
+    public long part2(Stream<String> lines) {
 
         Simulation simulation = createSimulation(lines.toList());
 

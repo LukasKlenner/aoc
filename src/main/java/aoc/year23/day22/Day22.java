@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 public class Day22 implements Day {
 
     @Override
-    public Object part1(Stream<String> lines) {
+    public long part1(Stream<String> lines) {
 
         List<Brick> bricks = lines.map(Brick::new)
                 .sorted(Comparator.comparingInt(Brick::getMinZ))
@@ -68,7 +68,7 @@ public class Day22 implements Day {
     }
 
     @Override
-    public Object part2(Stream<String> lines) {
+    public long part2(Stream<String> lines) {
         List<Brick> bricks = lines.map(Brick::new)
                 .sorted(Comparator.comparingInt(Brick::getMinZ))
                 .toList();

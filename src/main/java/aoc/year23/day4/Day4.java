@@ -9,12 +9,12 @@ import java.util.stream.Stream;
 
 public class Day4 implements Day {
     @Override
-    public Object part1(Stream<String> lines) {
+    public long part1(Stream<String> lines) {
         return lines.map(Card::new).mapToInt(Card::getScore).sum();
     }
 
     @Override
-    public Object part2(Stream<String> lines) {
+    public long part2(Stream<String> lines) {
 
         List<Card> cards = lines.map(Card::new).toList();
         List<Integer> counts = new ArrayList<>();

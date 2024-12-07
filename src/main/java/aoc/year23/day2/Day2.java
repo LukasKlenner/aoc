@@ -13,7 +13,7 @@ public class Day2 implements Day {
 
 
     @Override
-    public Object part1(Stream<String> lines) {
+    public long part1(Stream<String> lines) {
         return lines.mapToInt(l -> Arrays.stream(l.split(": ")[1].split("(; )|(, )"))
                         .map(s -> s.split(" "))
                         .anyMatch(arr -> arr[1].equals("red") && Integer.parseInt(arr[0]) > 12 ||
@@ -24,7 +24,7 @@ public class Day2 implements Day {
     }
 
     @Override
-    public Object part2(Stream<String> lines) {
+    public long part2(Stream<String> lines) {
 
         return lines.map(l -> Arrays.stream(l.split(": ")[1].split("; "))
                         .map(s -> Arrays.stream(s.split(", "))
