@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 public class Day6 implements Day {
 
     @Override
-    public Object part1(Stream<String> linesStream) {
+    public long part1(Stream<String> linesStream) {
         List<String> lines = linesStream.toList();
 
         List<Integer> times = Arrays.stream(lines.get(0).substring(11).split(" ")).filter(s -> !s.isEmpty()).map(Integer::parseInt).toList();
@@ -57,7 +57,7 @@ public class Day6 implements Day {
     }
 
     @Override
-    public Object part2(Stream<String> linesStream) {
+    public long part2(Stream<String> linesStream) {
         List<String> lines = linesStream.toList();
 
         List<Long> times = List.of(Long.parseLong(lines.get(0).substring(11).replaceAll(" ", "")));
