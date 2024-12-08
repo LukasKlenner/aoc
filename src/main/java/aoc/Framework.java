@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class Framework {
 
-    public static final int DAY = 6;
+    public static final int DAY = 7;
     public static final int YEAR = 2024;
 
     public static final boolean useCurrentDay = false;
