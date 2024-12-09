@@ -8,10 +8,10 @@ import java.util.Objects;
 
 public class Framework {
 
-    public static final int DAY = 7;
+    public static final int DAY = 8;
     public static final int YEAR = 2024;
 
-    public static final boolean useCurrentDay = false;
+    public static final boolean useCurrentDay = true;
     public static final boolean useCurrentYear = true;
 
     public static void main(String[] args) throws Exception {

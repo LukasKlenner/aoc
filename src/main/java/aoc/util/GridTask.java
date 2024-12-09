@@ -3,6 +3,8 @@ package aoc.util;
 import aoc.Day;
 
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -52,6 +54,14 @@ public abstract class GridTask<T> implements Day {
 
     protected boolean isInBounds(Pos pos) {
         return pos.isInBounds(grid);
+    }
+
+    protected void foreachCell(BiConsumer<Pos, ? super T> consumer) {
+        for (int y = 0; y < grid.length; y++) {
+            for (int x = 0; x < grid[0].length; x++) {
+                consumer.accept(new Pos(x, y), grid[y][x]);
+            }
+        }
     }
 
     private void loadGrid(Stream<String> lines) {

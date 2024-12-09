@@ -1,6 +1,10 @@
 package aoc.util;
 
-public record Pos(int x, int y) {
+import java.util.Comparator;
+
+public record Pos(int x, int y) implements Comparable<Pos> {
+
+    public static final Comparator<Pos> COMPARATOR = Comparator.comparingInt(Pos::x).thenComparing(Pos::y);
 
     public Pos(Pos pos) {
         this(pos.x, pos.y);
@@ -8,10 +12,10 @@ public record Pos(int x, int y) {
 
     public Pos add(Direction direction, int value) {
         return switch (direction) {
-            case UP -> add(0, -1);
-            case DOWN -> add(0, 1);
-            case LEFT -> add(-1, 0);
-            case RIGHT -> add(1, 0);
+            case UP -> add(0, -value);
+            case DOWN -> add(0, value);
+            case LEFT -> add(-value, 0);
+            case RIGHT -> add(value, 0);
         };
     }
 
@@ -21,6 +25,22 @@ public record Pos(int x, int y) {
 
     public Pos add(int dx, int dy) {
         return new Pos(x + dx, y + dy);
+    }
+
+    public Pos add(Pos pos) {
+        return add(pos.x, pos.y);
+    }
+
+    public Pos sub(Direction direction, int value) {
+        return add(direction, -value);
+    }
+
+    public Pos sub(int dx, int dy) {
+        return new Pos(x - dx, y - dy);
+    }
+
+    public Pos sub(Pos pos) {
+        return sub(pos.x, pos.y);
     }
 
     public <T> boolean isInBounds(T[][] arr) {
@@ -44,4 +64,8 @@ public record Pos(int x, int y) {
         return "(%d, %d)".formatted(x, y);
     }
 
+    @Override
+    public int compareTo(Pos o) {
+        return COMPARATOR.compare(this, o);
+    }
 }
