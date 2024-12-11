@@ -1,7 +1,14 @@
 package aoc.util.graph;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class Graph<T> {
@@ -31,20 +38,50 @@ public class Graph<T> {
         return edges;
     }
 
-    public void dfs(Node<T> start, Consumer<Node<T>> onDiscover) {
-        Set<Node<T>> visited = new HashSet<>();
-        dfs(start, visited, onDiscover);
+    public void dfs(Node<T> start, Consumer<Node<T>> onDiscover, Consumer<Node<T>> onFinish) {
+        dfs(start, new HashSet<>(), onDiscover, onFinish);
     }
 
 
-    public void dfs(Node<T> current, Set<Node<T>> visited, Consumer<Node<T>> onDiscover) {
+    public void dfs(Node<T> current, Set<Node<T>> visited, Consumer<Node<T>> onDiscover, Consumer<Node<T>> onFinish) {
         current.getOutgoingEdges().stream()
                 .map(Edge::to)
                 .filter(node -> !visited.contains(node))
                 .forEach(node -> {
                     visited.add(node);
                     onDiscover.accept(node);
-                    dfs(node, visited, onDiscover);
+                    dfs(node, visited, onDiscover, onFinish);
                 });
+
+        onFinish.accept(current);
+    }
+
+    public void bfs(Node<T> start, BiConsumer<Node<T>, Node<T>> onDiscover, BiConsumer<Node<T>, Node<T>> onRevisit, Consumer<Node<T>> onFinish) {
+
+        Queue<Node<T>> queue = new LinkedList<>();
+        queue.add(start);
+
+        Set<Node<T>> visited = new HashSet<>();
+
+        while (!queue.isEmpty()) {
+
+            Node<T> current = queue.poll();
+            visited.add(current);
+
+            current.getOutgoingEdges().stream()
+                    .map(Edge::to)
+                    .forEach(node -> {
+                        if (visited.contains(node)) {
+                            onRevisit.accept(current, node);
+                            return;
+                        }
+
+                        visited.add(node);
+                        queue.add(node);
+                        onDiscover.accept(current, node);
+                    });
+
+            onFinish.accept(current);
+        }
     }
 }
