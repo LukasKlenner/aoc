@@ -1,9 +1,15 @@
 package aoc.util;
 
 import aoc.Day;
+import aoc.util.graph.Edge;
+import aoc.util.graph.Graph;
+import aoc.util.graph.Node;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -62,6 +68,24 @@ public abstract class GridTask<T> implements Day {
                 consumer.accept(new Pos(x, y), grid[y][x]);
             }
         }
+    }
+
+    protected Graph<T> toGraph(BiFunction<Pos, Pos, Boolean> edgeAcceptor) {
+        Graph<T> graph = new Graph<T>();
+        Map<Pos, Node<T>> posToNode = new HashMap<>();
+
+        foreachCell((pos, value) -> posToNode.put(pos, graph.addNode(value)));
+
+        foreachCell((pos, value) -> {
+            for (Direction direction : Direction.values()) {
+                Pos newPos = pos.add(direction);
+                if (isInBounds(newPos) && edgeAcceptor.apply(pos, newPos)) {
+                    graph.addEdge(posToNode.get(pos), posToNode.get(newPos));
+                }
+            }
+        });
+
+        return graph;
     }
 
     private void loadGrid(Stream<String> lines) {

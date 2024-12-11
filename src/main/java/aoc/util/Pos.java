@@ -43,6 +43,22 @@ public record Pos(int x, int y) implements Comparable<Pos> {
         return sub(pos.x, pos.y);
     }
 
+    public Pos up() {
+        return add(Direction.UP);
+    }
+
+    public Pos down() {
+        return add(Direction.DOWN);
+    }
+
+    public Pos left() {
+        return add(Direction.LEFT);
+    }
+
+    public Pos right() {
+        return add(Direction.RIGHT);
+    }
+
     public <T> boolean isInBounds(T[][] arr) {
         return x >= 0 && y >= 0 && x < arr.length && y < arr[0].length;
     }
