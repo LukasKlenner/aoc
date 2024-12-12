@@ -19,7 +19,7 @@ public class Day10 extends JoinedGridTask<Integer> {
     @Override
     public long run(boolean part1) {
 
-        Graph<Integer> graph = toGraph((pos1, pos2) -> getValue(pos1) + 1 == getValue(pos2));
+        Graph<Integer> graph = toGraph((pos1, pos2) -> getValue(pos1) + 1 == getValue(pos2)).first;
 
         AtomicInteger result = new AtomicInteger();
 

@@ -21,4 +21,22 @@ public enum Direction {
             case LEFT -> UP;
         };
     }
+
+    public Direction rotate180() {
+        return switch (this) {
+            case UP -> DOWN;
+            case RIGHT -> LEFT;
+            case DOWN -> UP;
+            case LEFT -> RIGHT;
+        };
+    }
+
+    public Direction rotate270() {
+        return switch (this) {
+            case UP -> LEFT;
+            case RIGHT -> UP;
+            case DOWN -> RIGHT;
+            case LEFT -> DOWN;
+        };
+    }
 }

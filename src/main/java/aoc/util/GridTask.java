@@ -70,11 +70,11 @@ public abstract class GridTask<T> implements Day {
         }
     }
 
-    protected Graph<T> toGraph(BiFunction<Pos, Pos, Boolean> edgeAcceptor) {
-        Graph<T> graph = new Graph<T>();
+    protected Pair<Graph<T>, Map<Pos, Node<T>>> toGraph(BiFunction<Pos, Pos, Boolean> edgeAcceptor) {
+        Graph<T> graph = new Graph<>();
         Map<Pos, Node<T>> posToNode = new HashMap<>();
 
-        foreachCell((pos, value) -> posToNode.put(pos, graph.addNode(value)));
+        foreachCell((pos, value) -> posToNode.put(pos, graph.addNode(value, pos)));
 
         foreachCell((pos, value) -> {
             for (Direction direction : Direction.values()) {
@@ -85,7 +85,7 @@ public abstract class GridTask<T> implements Day {
             }
         });
 
-        return graph;
+        return new Pair<>(graph, posToNode);
     }
 
     private void loadGrid(Stream<String> lines) {

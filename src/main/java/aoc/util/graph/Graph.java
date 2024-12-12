@@ -1,5 +1,7 @@
 package aoc.util.graph;
 
+import aoc.util.Pos;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,8 +18,8 @@ public class Graph<T> {
     private final Set<Node<T>> nodes = new HashSet<>();
     private final Set<Edge<T>> edges = new HashSet<>();
 
-    public Node<T> addNode(T value) {
-        Node<T> node = new Node<>(nodes.size(), value);
+    public Node<T> addNode(T value, Pos pos) {
+        Node<T> node = new Node<>(nodes.size(), value, pos);
         nodes.add(node);
         return node;
     }
@@ -44,14 +46,13 @@ public class Graph<T> {
 
 
     public void dfs(Node<T> current, Set<Node<T>> visited, Consumer<Node<T>> onDiscover, Consumer<Node<T>> onFinish) {
+        visited.add(current);
+        onDiscover.accept(current);
+
         current.getOutgoingEdges().stream()
                 .map(Edge::to)
                 .filter(node -> !visited.contains(node))
-                .forEach(node -> {
-                    visited.add(node);
-                    onDiscover.accept(node);
-                    dfs(node, visited, onDiscover, onFinish);
-                });
+                .forEach(node -> dfs(node, visited, onDiscover, onFinish));
 
         onFinish.accept(current);
     }
