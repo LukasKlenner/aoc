@@ -10,4 +10,9 @@ public class Pair<S, T> {
         this.second = second;
     }
 
+    @Override
+    public String toString() {
+        return "(" + first + ", " + second + ")";
+    }
+
 }
