@@ -1,5 +1,6 @@
 package aoc.util;
 
+import java.util.List;
 import java.util.Stack;
 import java.util.function.Function;
 
@@ -13,6 +14,10 @@ public abstract class MovementBasedGridTask<T> extends JoinedGridTask<T> {
 
     public MovementBasedGridTask(Function<Character, T> gridParser, Function<Integer, T[]> arrayFct, Function<Integer, T[][]> arrayFct2D) {
         super(gridParser, arrayFct, arrayFct2D);
+    }
+
+    public MovementBasedGridTask(Function<List<String>, List<String>> gridInputFct, Function<Character, T> gridParser, Function<Integer, T[]> arrayFct, Function<Integer, T[][]> arrayFct2D) {
+        super(gridInputFct, gridParser, arrayFct, arrayFct2D);
     }
 
     @Override
