@@ -19,20 +19,30 @@ public abstract class GridTask<T> implements Day {
     private final Function<Character, T> gridParser;
     private final Function<Integer, T[]> arrayFct;
     private final Function<Integer, T[][]> arrayFct2D;
+    private final Function<List<String>, List<String>> gridInputFct;
 
     protected T[][] grid;
 
     protected List<String> input;
+    protected List<String> gridInput;
 
     public GridTask(Function<Character, T> gridParser, Function<Integer, T[]> arrayFct, Function<Integer, T[][]> arrayFct2D) {
+        this(Function.identity(), gridParser, arrayFct, arrayFct2D);
+    }
+
+    public GridTask(Function<List<String>, List<String>> gridInputFct, Function<Character, T> gridParser, Function<Integer, T[]> arrayFct, Function<Integer, T[][]> arrayFct2D) {
         this.gridParser = gridParser;
         this.arrayFct = arrayFct;
         this.arrayFct2D = arrayFct2D;
+        this.gridInputFct = gridInputFct;
     }
 
     @Override
     public long part1(Stream<String> lines) {
-        if (grid == null) loadGrid(lines);
+        input = lines.toList();
+        gridInput = gridInputFct.apply(input);
+
+        loadGrid();
 
         return part1();
     }
@@ -41,7 +51,10 @@ public abstract class GridTask<T> implements Day {
 
     @Override
     public long part2(Stream<String> lines) {
-        if (grid == null) loadGrid(lines);
+        input = lines.toList();
+        gridInput = gridInputFct.apply(input);
+
+        loadGrid();
 
         return part2();
     }
@@ -70,6 +83,35 @@ public abstract class GridTask<T> implements Day {
         }
     }
 
+    protected Pos findValue(T value) {
+        for (int y = 0; y < input.size(); y++) {
+            String line = input.get(y);
+
+            for (int x = 0; x < line.length(); x++) {
+                if (gridParser.apply(line.charAt(x)).equals(value)) {
+                    return new Pos(x, y);
+                }
+            }
+        }
+
+        throw new IllegalArgumentException();
+    }
+
+    //TODO find in grid
+    protected Pos findCharValue(char value) {
+        for (int y = 0; y < input.size(); y++) {
+            String line = input.get(y);
+
+            for (int x = 0; x < line.length(); x++) {
+                if (line.charAt(x) == value) {
+                    return new Pos(x, y);
+                }
+            }
+        }
+
+        throw new IllegalArgumentException();
+    }
+
     protected Pair<Graph<T>, Map<Pos, Node<T>>> toGraph(BiFunction<Pos, Pos, Boolean> edgeAcceptor) {
         Graph<T> graph = new Graph<>();
         Map<Pos, Node<T>> posToNode = new HashMap<>();
@@ -88,12 +130,22 @@ public abstract class GridTask<T> implements Day {
         return new Pair<>(graph, posToNode);
     }
 
-    private void loadGrid(Stream<String> lines) {
-        input = lines.toList();
-        grid = arrayFct2D.apply(input.size());
+    protected void printGrid() {
+        for (T[] line : grid) {
+            for (int x = 0; x < grid[0].length; x++) {
+                System.out.print(line[x]);
+            }
+            System.out.println();
+        }
 
-        for (int y = 0; y < input.size(); y++) {
-            String line = input.get(y);
+        System.out.println();
+    }
+
+    protected void loadGrid() {
+        grid = arrayFct2D.apply(gridInput.size());
+
+        for (int y = 0; y < gridInput.size(); y++) {
+            String line = gridInput.get(y);
             grid[y] = arrayFct.apply(line.length());
 
             for (int x = 0; x < line.length(); x++) {

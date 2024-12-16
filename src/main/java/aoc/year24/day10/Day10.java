@@ -29,6 +29,7 @@ public class Day10 extends JoinedGridTask<Integer> {
                     Set<Integer> reached = new HashSet<>();
                     graph.dfs(n, node -> {
                         if (node.getValue() == 9) reached.add(node.getId());
+                        return true;
                     }, node -> {});
                     result.addAndGet(reached.size());
                 } else {

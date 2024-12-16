@@ -13,6 +13,16 @@ public enum Direction {
         };
     }
 
+    public static Direction fromArrow(char c) {
+        return switch (c) {
+            case '^' -> Direction.UP;
+            case 'v' -> Direction.DOWN;
+            case '<' -> Direction.LEFT;
+            case '>' -> Direction.RIGHT;
+            default -> null;
+        };
+    }
+
     public Direction rotate90() {
         return switch (this) {
             case UP -> RIGHT;

@@ -12,6 +12,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class Graph<T> {
 
@@ -40,14 +41,14 @@ public class Graph<T> {
         return edges;
     }
 
-    public void dfs(Node<T> start, Consumer<Node<T>> onDiscover, Consumer<Node<T>> onFinish) {
+    public void dfs(Node<T> start, Function<Node<T>, Boolean> onDiscover, Consumer<Node<T>> onFinish) {
         dfs(start, new HashSet<>(), onDiscover, onFinish);
     }
 
 
-    public void dfs(Node<T> current, Set<Node<T>> visited, Consumer<Node<T>> onDiscover, Consumer<Node<T>> onFinish) {
+    public void dfs(Node<T> current, Set<Node<T>> visited, Function<Node<T>, Boolean> onDiscover, Consumer<Node<T>> onFinish) {
         visited.add(current);
-        onDiscover.accept(current);
+        if (!onDiscover.apply(current)) return;
 
         current.getOutgoingEdges().stream()
                 .map(Edge::to)

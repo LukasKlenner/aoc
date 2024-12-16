@@ -67,4 +67,8 @@ public class Node<T> {
         return outgoingEdges;
     }
 
+    @Override
+    public String toString() {
+        return "value: %s, pos: %s".formatted(value, pos);
+    }
 }

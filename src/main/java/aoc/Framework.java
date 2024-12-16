@@ -24,13 +24,18 @@ public class Framework {
 
         System.out.println("Running year " + currentYear + " day " + currentDay);
 
+        long startTime = System.nanoTime();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(dayClass.getResourceAsStream("input.txt"))))) {
             System.out.println("Part1: " + day.part1(reader.lines()));
         }
+        System.out.printf("Time: %.2fms\n", (System.nanoTime() - startTime) / 1e6);
+        System.out.println();
 
+        startTime = System.nanoTime();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(dayClass.getResourceAsStream("input.txt"))))) {
             System.out.println("Part2: " + day.part2(reader.lines()));
         }
+        System.out.printf("Time: %.2fms\n", (System.nanoTime() - startTime) / 1e6);
     }
 
     private static int getCurrentDay() {

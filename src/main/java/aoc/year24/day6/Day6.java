@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.BiConsumer;
 
 public class Day6 extends MovementBasedGridTask<Boolean> {
 
@@ -89,17 +88,7 @@ public class Day6 extends MovementBasedGridTask<Boolean> {
 
     @Override
     protected Pos getStartPos() {
-        for (int y = 0; y < input.size(); y++) {
-            String line = input.get(y);
-
-            for (int x = 0; x < line.length(); x++) {
-                if (line.charAt(x) == '^') {
-                    return new Pos(x, y);
-                }
-            }
-        }
-
-        throw new IllegalArgumentException();
+        return findCharValue('^');
     }
 
     @Override

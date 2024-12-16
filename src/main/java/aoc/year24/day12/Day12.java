@@ -64,6 +64,7 @@ public class Day12 extends JoinedGridTask<Character> {
                         }
                     }
                 }
+                return true;
             }, n -> {});
 
             result += area.get() * perimeter.get();
