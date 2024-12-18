@@ -131,9 +131,13 @@ public abstract class GridTask<T> implements Day {
     }
 
     protected void printGrid() {
+        printGrid(Object::toString);
+    }
+
+    protected void printGrid(Function<T, String> valToString) {
         for (T[] line : grid) {
             for (int x = 0; x < grid[0].length; x++) {
-                System.out.print(line[x]);
+                System.out.print(valToString.apply(line[x]));
             }
             System.out.println();
         }

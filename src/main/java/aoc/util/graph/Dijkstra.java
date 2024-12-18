@@ -64,17 +64,20 @@ public class Dijkstra<T, N> {
         }
     }
 
-    protected List<T> reconstructPath(T target) {
+    public List<T> reconstructPath(T start, T target) {
         List<T> path = new LinkedList<>();
 
         T current = target;
 
         while (current != null) {
             path.addFirst(current);
+
+            if (current.equals(start)) return path;
+
             current = predecessors.get(current);
         }
 
-        return path;
+        return null;
     }
 
 
