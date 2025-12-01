@@ -6,36 +6,36 @@ import java.io.IOException;
 
 public class ClassCreator {
 
-    public static final int YEAR = 24;
+    public static final int YEAR = 25;
 
     public static void main(String[] args) throws IOException {
 
-        for (int i = 4; i < 26; i++) {
-            File file = new File("src/main/java/aoc/year" + YEAR + "/day" + i + "/Day" + i + ".java");
+        for (int i = 1; i < 26; i++) {
+
+            String day = i < 10 ? "0" + i : Integer.toString(i);
+
+            File file = new File("src/main/kotlin/aoc/year" + YEAR + "/Day" + day + ".kt");
             file.getParentFile().mkdirs();
             file.createNewFile();
 
             try (FileWriter fw = new FileWriter(file)) {
 
                 fw.write("""
-package aoc.year24.day%d;
+package aoc.year%s
 
-import aoc.JoinedDay;
+import aoc.JoinedDay
+import java.util.stream.Stream
 
-import java.util.stream.Stream;
-
-public class Day%d implements JoinedDay {
-
-    @Override
-    public Object run(Stream<String> stream, boolean part1) {
-        return null;
-    }
+class Day%s : JoinedDay {
     
+    override fun run(stream: Stream<String?>?, part1: Boolean): Long {
+        TODO("Not yet implemented")
+    }
 }
-""".formatted(i, i));
+""".formatted(YEAR, day));
             }
 
-            file = new File("src/main/resources/aoc/year" + YEAR + "/day" + i + "/input.txt");
+            file = new File("src/main/resources/aoc/year" + YEAR + "/day" + day + "_input.txt");
             file.getParentFile().mkdirs();
             file.createNewFile();
         }
