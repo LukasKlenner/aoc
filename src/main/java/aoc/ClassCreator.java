@@ -23,12 +23,11 @@ public class ClassCreator {
                 fw.write("""
 package aoc.year%s
 
-import aoc.JoinedDay
-import java.util.stream.Stream
+import aoc.KtJoinedDay
 
-class Day%s : JoinedDay {
-    
-    override fun run(stream: Stream<String?>?, part1: Boolean): Long {
+class Day%s : KtJoinedDay {
+
+    override fun run(input: List<String>, part1: Boolean): Long {
         TODO("Not yet implemented")
     }
 }

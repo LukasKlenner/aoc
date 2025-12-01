@@ -1,6 +1,7 @@
 package aoc
 
 import java.io.BufferedReader
+import java.io.File
 import java.io.InputStreamReader
 import java.util.*
 
@@ -15,21 +16,18 @@ fun main() {
     val currentYear = (if (useCurrentYear) getCurrentYear() else YEAR).toString().substring(2, 4)
 
     val dayClass = Class.forName("aoc.year$currentYear.Day$currentDay")
-    val day = dayClass.getConstructors()[0].newInstance() as Day
+    val day = dayClass.getConstructors()[0].newInstance() as KtDay
 
     println("Running year $currentYear day $currentDay")
 
     var startTime = System.nanoTime()
-    BufferedReader(InputStreamReader(Objects.requireNonNull(dayClass.getResourceAsStream("day${currentDay}_input.txt")))).use { reader ->
-        println("Part1: " + day.part1(reader.lines()))
-    }
+
+    println("Part1: " + day.part1(File("src/main/resources/aoc/year25/day${currentDay}_input.txt").readLines()))
     System.out.printf("Time: %.2fms\n", (System.nanoTime() - startTime) / 1e6)
     println()
 
     startTime = System.nanoTime()
-    BufferedReader(InputStreamReader(Objects.requireNonNull(dayClass.getResourceAsStream("day${currentDay}_input.txt")))).use { reader ->
-        println("Part2: " + day.part2(reader.lines()))
-    }
+    println("Part2: " + day.part2(File("src/main/resources/aoc/year25/day${currentDay}_input.txt").readLines()))
     System.out.printf("Time: %.2fms\n", (System.nanoTime() - startTime) / 1e6)
 }
 

@@ -1,11 +1,10 @@
 package aoc.year25
 
-import aoc.JoinedDay
-import java.util.stream.Stream
+import aoc.KtJoinedDay
 
-class Day04 : JoinedDay {
+class Day04 : KtJoinedDay {
 
-    override fun run(stream: Stream<String?>?, part1: Boolean): Long {
+    override fun run(input: List<String>, part1: Boolean): Long {
         TODO("Not yet implemented")
     }
 }
