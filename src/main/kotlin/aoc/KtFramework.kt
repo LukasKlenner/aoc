@@ -1,14 +1,12 @@
 package aoc
 
-import java.io.BufferedReader
 import java.io.File
-import java.io.InputStreamReader
 import java.util.*
 
-const val DAY = 1
+const val DAY = 2
 const val YEAR = 2026
 
-const val useCurrentDay = true
+const val useCurrentDay = false
 const val useCurrentYear = true
 
 fun main() {
