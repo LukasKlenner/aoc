@@ -1,6 +1,7 @@
 package aoc;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,16 +24,20 @@ public class Framework {
         Day day = (Day) dayClass.getConstructors()[0].newInstance();
 
         System.out.println("Running year " + currentYear + " day " + currentDay);
+        run(day);
+    }
+
+    public static void run(Day day) throws IOException {
 
         long startTime = System.nanoTime();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(dayClass.getResourceAsStream("input.txt"))))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(day.getClass().getResourceAsStream("input.txt"))))) {
             System.out.println("Part1: " + day.part1(reader.lines()));
         }
         System.out.printf("Time: %.2fms\n", (System.nanoTime() - startTime) / 1e6);
         System.out.println();
 
         startTime = System.nanoTime();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(dayClass.getResourceAsStream("input.txt"))))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(day.getClass().getResourceAsStream("input.txt"))))) {
             System.out.println("Part2: " + day.part2(reader.lines()));
         }
         System.out.printf("Time: %.2fms\n", (System.nanoTime() - startTime) / 1e6);

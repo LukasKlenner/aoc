@@ -3,7 +3,7 @@ package aoc
 import java.io.File
 import java.util.*
 
-const val DAY = 2
+const val DAY = 4
 const val YEAR = 2026
 
 const val useCurrentDay = false
@@ -14,18 +14,22 @@ fun main() {
     val currentYear = (if (useCurrentYear) getCurrentYear() else YEAR).toString().substring(2, 4)
 
     val dayClass = Class.forName("aoc.year$currentYear.Day$currentDay")
-    val day = dayClass.getConstructors()[0].newInstance() as KtDay
+    val day = dayClass.getConstructors()[0].newInstance()
 
     println("Running year $currentYear day $currentDay")
 
     var startTime = System.nanoTime()
 
-    println("Part1: " + day.part1(File("src/main/resources/aoc/year25/day${currentDay}_input.txt").readLines()))
+    val input = File("src/main/resources/aoc/year25/day${currentDay}_input.txt").readLines()
+
+    val day1Result = if (day is KtDay) day.part1(input) else (day as Day).part1(input.stream())
+    println("Part1: $day1Result")
     System.out.printf("Time: %.2fms\n", (System.nanoTime() - startTime) / 1e6)
     println()
 
     startTime = System.nanoTime()
-    println("Part2: " + day.part2(File("src/main/resources/aoc/year25/day${currentDay}_input.txt").readLines()))
+    val day2Result = if (day is KtDay) day.part2(input) else (day as Day).part2(input.stream())
+    println("Part2: $day2Result")
     System.out.printf("Time: %.2fms\n", (System.nanoTime() - startTime) / 1e6)
 }
 
