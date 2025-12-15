@@ -1,17 +1,17 @@
 package aoc.util;
 
 import aoc.Day;
-import aoc.util.graph.Edge;
 import aoc.util.graph.Graph;
 import aoc.util.graph.Node;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public abstract class GridTask<T> implements Day {
@@ -83,6 +83,14 @@ public abstract class GridTask<T> implements Day {
         }
     }
 
+    protected Set<Pos> getSurroundingOf(Pos pos) {
+        return Stream.of(
+                pos.add(-1, -1), pos.add(0, -1), pos.add(1, -1),
+                pos.add(-1, 0),                          pos.add(1, 0),
+                pos.add(-1, 1),  pos.add(0, 1),  pos.add(1, 1)
+        ).filter(this::isInBounds).collect(Collectors.toSet());
+    }
+
     protected Pos findValue(T value) {
         for (int y = 0; y < grid.length; y++) {
             T[] line = grid[y];
@@ -134,9 +142,14 @@ public abstract class GridTask<T> implements Day {
     }
 
     protected void printGrid(Function<T, String> valToString) {
-        for (T[] line : grid) {
+        printGrid((pos, val) -> valToString.apply(val));
+    }
+
+    protected void printGrid(BiFunction<Pos, T, String> valToString) {
+        for (int y = 0; y < grid.length; y++) {
             for (int x = 0; x < grid[0].length; x++) {
-                System.out.print(valToString.apply(line[x]));
+                Pos pos = new Pos(x, y);
+                System.out.print(valToString.apply(pos, getValue(pos)));
             }
             System.out.println();
         }
