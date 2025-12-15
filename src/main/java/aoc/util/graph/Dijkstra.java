@@ -30,7 +30,6 @@ public class Dijkstra<T, N> {
         this.nodeToStateFct = nodeToStateFct;
     }
 
-
     public void run(T start) {
 
         init(start, allNodes);

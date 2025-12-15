@@ -4,6 +4,7 @@ import aoc.util.Direction;
 import aoc.util.Pos;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Node<T> {
@@ -30,6 +31,10 @@ public class Node<T> {
         this.pos = pos;
         this.ingoingEdges = new HashSet<>();
         this.outgoingEdges = new HashSet<>();
+    }
+
+    public boolean hasEdgeTo(Node<T> node) {
+        return getOutgoingEdges().stream().map(Edge::to).anyMatch(n -> n.equals(node));
     }
 
     public boolean hasConnection(Direction direction) {

@@ -162,9 +162,10 @@ public class Day17 implements JoinedDay {
 
                 int expected = targetBits[i];
 
-                //TODO wenn xor A3 ist, ist es notA3?
-
                 if (actual == null) {
+                    if (i == 2) {
+                        xor = xor == 0 ? 1 : 0;
+                    }
                     result[actualIndex] = expected ^ xor;
                     changed = true;
                     continue;
@@ -223,7 +224,7 @@ B3 = A1 A2 1
 C4 = A(A1*4 + A2*2 + notA3 + 2) A(A1*4 + A2*2 + notA3 + 1) A(notA1*4 + A2*2 + notA3)
 
 
-B6 = A(A1*4 + A2*2 + notA3 + 2) ^ A1     A(A1*4 + A2*2 + notA3 + 1) ^ A2      A(notA1*4 + A2*2 + notA3) ^ A3
+B6 = A(A1*4 + A2*2 + notA3 + 2) ^ notA1     A(A1*4 + A2*2 + notA3 + 1) ^ A2      A(notA1*4 + A2*2 + notA3) ^ A3
 	= X					= Y					= Z
 
 

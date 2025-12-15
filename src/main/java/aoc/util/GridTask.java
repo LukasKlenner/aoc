@@ -84,11 +84,11 @@ public abstract class GridTask<T> implements Day {
     }
 
     protected Pos findValue(T value) {
-        for (int y = 0; y < input.size(); y++) {
-            String line = input.get(y);
+        for (int y = 0; y < grid.length; y++) {
+            T[] line = grid[y];
 
-            for (int x = 0; x < line.length(); x++) {
-                if (gridParser.apply(line.charAt(x)).equals(value)) {
+            for (int x = 0; x < line.length; x++) {
+                if (line[x].equals(value)) {
                     return new Pos(x, y);
                 }
             }
@@ -97,7 +97,6 @@ public abstract class GridTask<T> implements Day {
         throw new IllegalArgumentException();
     }
 
-    //TODO find in grid
     protected Pos findCharValue(char value) {
         for (int y = 0; y < input.size(); y++) {
             String line = input.get(y);

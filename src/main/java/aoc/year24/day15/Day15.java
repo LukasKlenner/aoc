@@ -20,7 +20,7 @@ public class Day15 extends MovementBasedGridTask<Character> {
 
         if (!part1) {
             loadGridPart2();
-            currentPos = findCharValue('@');
+            currentPos = findValue('@');
         }
 
         List<Direction> directions = getDirections();
@@ -30,16 +30,12 @@ public class Day15 extends MovementBasedGridTask<Character> {
 
             if (part1) movePart1();
             else movePart2();
-
-
-            printGrid();
         }
-
 
         AtomicInteger sum = new AtomicInteger();
 
         foreachCell((pos, c) -> {
-            if (c == 'O') {
+            if (c == 'O' || c == '[') {
                 sum.addAndGet(100 * pos.y() + pos.x());
             }
         });
@@ -55,6 +51,10 @@ public class Day15 extends MovementBasedGridTask<Character> {
         if (getValue(newLastBoxPos).equals('#')) return;
 
         putValue(newLastBoxPos, 'O');
+        moveCurrentPos(nextPos);
+    }
+
+    private void moveCurrentPos(Pos nextPos) {
         putValue(nextPos, '@');
         putValue(currentPos, '.');
 
@@ -67,30 +67,25 @@ public class Day15 extends MovementBasedGridTask<Character> {
 
         if (getValue(nextPos).equals('#')) return;
         if (getValue(nextPos).equals('.')) {
-            currentPos = nextPos;
+            moveCurrentPos(nextPos);
             return;
         }
 
         if (canMoveBox(getPosOfBox(nextPos), currentDir)) {
             moveBox(getPosOfBox(nextPos), currentDir);
+            moveCurrentPos(nextPos);
         }
-
-        currentPos = nextPos;
     }
 
     private boolean canMoveBox(Pos boxPos, Direction dir) {
-        List<Pos> positionsToCheck = switch (dir) {
-            case RIGHT -> List.of(boxPos.right().right());
-            case DOWN -> List.of(boxPos.down(), boxPos.right().down());
-            case LEFT -> List.of(boxPos.left());
-            case UP -> List.of(boxPos.up(), boxPos.right().up());
-        };
+        List<Pos> positionsToCheck = getBoxPositionsToCheck(boxPos, dir);
 
         for (Pos posToCheck : positionsToCheck) {
-            Character value = getValue(posToCheck);
-            if (value.equals('#')) return false;
-            else if (value.equals(']') || value.equals('[')) {
-                return canMoveBox(getPosOfBox(posToCheck), dir);
+            if (getValue(posToCheck).equals('#')) return false;
+
+            Pos boxToCheck = getPosOfBox(posToCheck);
+            if (boxToCheck != null) {
+                if (!canMoveBox(boxToCheck, dir)) return false;
             }
         }
 
@@ -98,31 +93,33 @@ public class Day15 extends MovementBasedGridTask<Character> {
     }
 
     private void moveBox(Pos boxPos, Direction dir) {
-
-        List<Pos> positionsToCheck = switch (dir) {
-            case RIGHT -> List.of(boxPos.right().right());
-            case DOWN -> List.of(boxPos.down(), boxPos.right().down());
-            case LEFT -> List.of(boxPos.left());
-            case UP -> List.of(boxPos.up(), boxPos.right().up());
-        };
+        List<Pos> positionsToCheck = getBoxPositionsToCheck(boxPos, dir);
 
         putValue(boxPos, '.');
         putValue(boxPos.right(), '.');
 
         for (Pos posToCheck : positionsToCheck) {
-            Character value = getValue(posToCheck);
-            if (value.equals(']') || value.equals('[')) {
-                moveBox(getPosOfBox(posToCheck), dir);
-            }
+            Pos boxToCheck = getPosOfBox(posToCheck);
+            if (boxToCheck != null) moveBox(boxToCheck, dir);
         }
 
         putValue(boxPos.add(dir), '[');
         putValue(boxPos.right().add(dir), ']');
     }
 
+    private List<Pos> getBoxPositionsToCheck(Pos boxPos, Direction dir) {
+        return switch (dir) {
+            case RIGHT -> List.of(boxPos.right().right());
+            case DOWN -> List.of(boxPos.down(), boxPos.right().down());
+            case LEFT -> List.of(boxPos.left());
+            case UP -> List.of(boxPos.up(), boxPos.right().up());
+        };
+    }
+
     private Pos getPosOfBox(Pos pos) {
         if (getValue(pos).equals('[')) return pos;
-        else return pos.left();
+        else if (getValue(pos.left()).equals('[')) return pos.left();
+        return null;
     }
 
     private int getBoxesInFront() {

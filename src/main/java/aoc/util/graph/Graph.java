@@ -33,6 +33,22 @@ public class Graph<T> {
         return edge;
     }
 
+    public void addEdgeAndNodes(T from, T to) {
+        addEdge(getOrAddNode(from), getOrAddNode(to));
+    }
+
+    public Node<T> getOrAddNode(T value) {
+        Node<T> node = getNode(value);
+        if (node == null) {
+            return addNode(value, null);
+        }
+        return node;
+    }
+
+    public Node<T> getNode(T value) {
+        return nodes.stream().filter(n -> n.getValue().equals(value)).findFirst().orElse(null);
+    }
+
     public Set<Node<T>> getNodes() {
         return nodes;
     }
