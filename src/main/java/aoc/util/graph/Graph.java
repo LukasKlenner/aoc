@@ -45,7 +45,6 @@ public class Graph<T> {
         dfs(start, new HashSet<>(), onDiscover, onFinish);
     }
 
-
     public void dfs(Node<T> current, Set<Node<T>> visited, Function<Node<T>, Boolean> onDiscover, Consumer<Node<T>> onFinish) {
         visited.add(current);
         if (!onDiscover.apply(current)) return;

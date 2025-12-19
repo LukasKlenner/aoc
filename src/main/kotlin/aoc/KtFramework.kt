@@ -3,7 +3,7 @@ package aoc
 import java.io.File
 import java.util.*
 
-const val DAY = 4
+const val DAY = 5
 const val YEAR = 2026
 
 const val useCurrentDay = false

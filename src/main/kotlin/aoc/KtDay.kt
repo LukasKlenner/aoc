@@ -2,7 +2,7 @@ package aoc
 
 interface KtDay {
 
-    fun part1(lines: List<String>): Long
+    fun part1(input: List<String>): Long
 
-    fun part2(lines: List<String>): Long
+    fun part2(input: List<String>): Long
 }
